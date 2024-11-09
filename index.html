@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>購物網站</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>商品列表</h1>
+  <div id="products"></div>
+  <br>
+  <a href="cart.html" class="cart-link">查看購物車</a> <!-- 右上角的購物車連結 -->
+
+  <script>
+    // 用 fetch 請求獲取商品資料
+    fetch('https://fakestoreapi.com/products')
+      .then(response => response.json())
+      .then(data => {
+        const productContainer = document.getElementById('products');
+        data.forEach(product => {
+          const productElement = document.createElement('div');
+          productElement.classList.add('product');
+
+          productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.title}" class="product-img" />
+            <h2>${product.title}</h2>
+            <p>${product.description}</p>
+            <p>價格: $${product.price}</p>
+            <button onclick="addToCart(${product.id})">加入購物車</button>
+          `;
+
+          productContainer.appendChild(productElement);
+        });
+      });
+
+    // 儲存購物車的商品
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // 加入購物車的功能
+    function addToCart(productId) {
+      fetch(`https://fakestoreapi.com/products/${productId}`)
+        .then(response => response.json())
+        .then(product => {
+          cart.push(product);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          alert('商品已加入購物車!');
+        });
+    }
+  </script>
+</body>
+</html>

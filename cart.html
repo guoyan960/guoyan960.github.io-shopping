@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>購物車</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>購物車</h1>
+  <div id="cart-items"></div>
+
+  <br>
+  <a href="index.html" class="cart-link">返回商品頁</a> <!-- 右上角的返回商品頁連結 -->
+
+  <div id="total-price">
+    <h3>總金額: <span id="total-amount">0</span></h3> <!-- 顯示總金額 -->
+  </div>
+
+  <!-- 結帳按鈕 -->
+  <button id="checkout-btn" disabled>結帳</button> <!-- 初始禁用結帳按鈕 -->
+
+  <div id="checkout-message" style="display: none;">
+    <h3>結帳成功！感謝您的訂單！</h3>
+  </div>
+
+  <script>
+    // 獲取購物車資料並顯示
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalAmountElement = document.getElementById('total-amount');
+    const checkoutMessage = document.getElementById('checkout-message');
+    const checkoutButton = document.getElementById('checkout-btn');
+    let totalAmount = 0; // 初始化總金額
+
+    // 如果購物車為空，顯示空購物車提示
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = '<p>您的購物車是空的</p>';
+      totalAmountElement.textContent = '0'; // 如果購物車空，顯示總金額為0
+      checkoutButton.disabled = true; // 禁用結帳按鈕
+    } else {
+      cart.forEach((product, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('cart-item');
+        
+        itemElement.innerHTML = `
+          <img src="${product.image}" alt="${product.title}" class="cart-item-img"/>
+          <div class="cart-item-details">
+            <h3>${product.title}</h3>
+            <p class="description">${product.description}</p>
+          </div>
+          <div class="cart-item-price">
+            <p>$${product.price}</p>
+            <button onclick="removeFromCart(${index})">刪除商品</button>
+          </div>
+        `;
+        
+        cartItemsContainer.appendChild(itemElement);
+        totalAmount += product.price; // 累加總金額
+      });
+
+      totalAmountElement.textContent = totalAmount.toFixed(2); // 顯示總金額
+      checkoutButton.disabled = false; // 啟用結帳按鈕
+    }
+
+    // 刪除購物車中的商品
+    function removeFromCart(index) {
+      cart.splice(index, 1); // 刪除商品
+      localStorage.setItem('cart', JSON.stringify(cart)); // 更新 localStorage
+      window.location.reload(); // 重新載入頁面，顯示更新後的購物車
+    }
+
+    // 處理結帳
+    checkoutButton.addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('購物車是空的，無法結帳！');
+        return;
+      }
+
+      // 顯示結帳訊息並隱藏購物車內容
+      cartItemsContainer.style.display = 'none';
+      totalAmountElement.style.display = 'block';
+      checkoutButton.style.display = 'none';
+      checkoutMessage.style.display = 'block';
+      
+      // 清空購物車
+      localStorage.removeItem('cart');
+    });
+  </script>
+</body>
+</html>

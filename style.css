@@ -1,0 +1,125 @@
+/* 商品顯示區域 */
+.product {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+}
+
+.product img {
+  width: 200px;  /* 控制商品圖片大小 */
+  height: auto;
+}
+
+.product button {
+  padding: 5px 10px;
+  margin-top: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.product button:hover {
+  background-color: #45a049;
+}
+
+/* 購物車商品 */
+.cart-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 商品圖片 */
+.cart-item img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+/* 商品詳細部分（商品描述） */
+.cart-item-details {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.cart-item-details .description {
+  font-size: 14px;
+  color: #555;
+}
+
+/* 商品價格區域（右邊對齊金額） */
+.cart-item-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* 商品價格金額 */
+.cart-item-price p {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.cart-item button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.cart-item button:hover {
+  background-color: #d32f2f;
+}
+
+/* 右上角的購物車連結 */
+.cart-link {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.cart-link:hover {
+  background-color: #45a049;
+}
+
+/* 顯示總金額 */
+#total-price {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* 結帳按鈕樣式 */
+#checkout-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#checkout-btn:hover {
+  background-color: #45a049;
+}
+
+/* 顯示結帳成功訊息 */
+#checkout-message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #4CAF50;
+}
